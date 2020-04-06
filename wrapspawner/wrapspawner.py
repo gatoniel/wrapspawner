@@ -116,6 +116,12 @@ class WrapSpawner(Spawner):
         self.child_config = {}
         self.child_spawner = None
 
+    # pass on preexec_fn to child_spawner
+    def set_preexec_fn(self, fn):
+        if not self.child_spawner:
+            self.construct_child()
+        self.child_spawner.set_preexec_fn(fn)
+
     # proxy functions for start/poll/stop
     # pass back the child's Future, or create a dummy if needed
 
@@ -301,4 +307,3 @@ class DockerProfilesSpawner(ProfilesSpawner):
 
 
 # vim: set ai expandtab softtabstop=4:
-
